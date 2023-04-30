@@ -39,9 +39,13 @@ Once the plugin is enabled, you can interact with it in ChatGPT by providing ins
 
 User: Use the C6-Node Plugin to get information for the ID "exampleid3".
 
+## Development
+The ChatGPT conversation in which this code was written is:
+https://shareg.pt/WZKTELa
+
 ## License
 
-This project is licensed under the [ISC License](https://opensource.org/licenses/ISC).
+This project is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 ## Contributing
 
