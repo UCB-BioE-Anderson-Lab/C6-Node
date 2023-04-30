@@ -174,71 +174,51 @@ function validate(sharable, db) {
 }
 
 // Create operation
-router.post('/api/create', (req,
-res) => {
-    const sharable = req.body;
-    const validationResult =
-        validate(sharable, db);
-    if (validationResult !==
-        true) {
-        return res.status(400)
-            .json({
-                error: validationResult
-            });
+router.post('/api/create', (req, res) => {
+    // Check if the request data contains the 'sharable' wrapper
+    let sharable = req.body;
+    if (sharable.sharable) {
+        // Unwrap the 'sharable' object
+        sharable = sharable.sharable;
+    }
+
+    const validationResult = validate(sharable, db);
+    if (validationResult !== true) {
+        return res.status(400).json({ error: validationResult });
     }
     if (db[sharable.id]) {
-        return res.status(400)
-            .json({
-                error: 'ID already exists'
-            });
+        return res.status(400).json({ error: 'ID already exists' });
     }
     db[sharable.id] = sharable;
-    res.json({
-        id: sharable.id
-    });
+    res.json({ id: sharable.id });
 });
 
 // Update operation
-router.put('/api/update/:id', (req,
-    res) => {
-        const id = req.params.id;
-        const {
-            type,
-            data
-        } = req.body;
+router.put('/api/update/:id', (req, res) => {
+    const id = req.params.id;
 
-        // Check if the sharable object exists in the database
-        if (!db[id]) {
-            return res.status(404)
-                .json({
-                    error: 'ID not found'
-                });
-        }
+    // Check if the request data contains the 'sharable' wrapper
+    let sharable = req.body;
+    if (sharable.sharable) {
+        // Unwrap the 'sharable' object
+        sharable = sharable.sharable;
+    }
 
-        // Create a new sharable object with the updated properties
-        const updatedSharable = {
-            id: id,
-            type: type,
-            data: data
-        };
+    // Check if the sharable object exists in the database
+    if (!db[id]) {
+        return res.status(404).json({ error: 'ID not found' });
+    }
 
-        // Validate the updated sharable object
-        const validationResult =
-            validate(
-                updatedSharable, db
-                );
-        if (validationResult !==
-            true) {
-            return res.status(400)
-                .json({
-                    error: validationResult
-                });
-        }
+    // Validate the updated sharable object
+    const validationResult = validate(sharable, db);
+    if (validationResult !== true) {
+        return res.status(400).json({ error: validationResult });
+    }
 
-        // Perform the update operation
-        db[id] = updatedSharable;
-        res.json(updatedSharable);
-    });
+    // Perform the update operation
+    db[id] = sharable;
+    res.json(sharable);
+});
 
 // Delete operation
 router.delete('/api/delete/:id', (req,
