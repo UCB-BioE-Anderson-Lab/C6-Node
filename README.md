@@ -92,7 +92,7 @@ These are just examples of how you can interact with the C6-Node plugin in ChatG
 
 ## License
 
-This project is licensed under the [ISC License](https://opensource.org/licenses/ISC).
+This project is licensed under the [Apache License](http://www.apache.org/licenses/).
 
 ## Contributing
 
