@@ -25,6 +25,8 @@ npm install
 
 1. Start the Express server:
 npm start
+- or -
+node index.js
 
 2. The server will start running on `http://localhost:3000`.
 
