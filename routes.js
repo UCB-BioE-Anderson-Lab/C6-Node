@@ -237,52 +237,29 @@ router.delete('/api/delete/:id', (req,
 });
 
 // Run operation for Functions
-router.post('/api/run/:id', (req,
-    res) => {
-        console.log(
-            'Received request to run function'
-            );
-        const id = req.params.id;
-        const args = req.body.args;
-        console.log('Args:', args);
-        const sharable = db[id];
-        if (!sharable || sharable
-            .type !== 'function') {
-            return res.status(404)
-                .json({
-                    error: 'Function not found'
-                });
-        }
-        console.log(
-            'Function found:',
-            sharable);
-        const script = new vm
-            .Script(sharable.code);
-        const context = vm
-            .createContext();
-        script.runInContext(
-        context);
-        let result;
-        try {
-            // Use the correct function name "revcomp" when calling the function
-            result = context
-                .revcomp(...args);
-        } catch (error) {
-            console.error(
-                'Execution error:',
-                error);
-            return res.status(500)
-                .json({
-                    error: 'Execution error'
-                });
-        }
-        console.log(
-            'Execution result:',
-            result);
-        res.json({
-            result
-        });
-    });
-
+router.post('/api/run/:id', (req, res) => {
+    console.log('Received request to run function');
+    const id = req.params.id;
+    const args = req.body.args;
+    console.log('Args:', args);
+    const sharable = db[id];
+    if (!sharable || sharable.type !== 'function') {
+        return res.status(404).json({ error: 'Function not found' });
+    }
+    console.log('Function found:', sharable);
+    const script = new vm.Script(sharable.code);
+    const context = vm.createContext();
+    script.runInContext(context);
+    let result;
+    try {
+        // Use eval to dynamically call the function by its name
+        result = eval(`context.${id}(...args)`);
+    } catch (error) {
+        console.error('Execution error:', error);
+        return res.status(500).json({ error: 'Execution error' });
+    }
+    console.log('Execution result:', result);
+    res.json({ result });
+});
 
 module.exports = router;
