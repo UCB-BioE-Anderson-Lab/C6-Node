@@ -15,36 +15,21 @@ The C6-Node Plugin is a simple Node.js application that demonstrates how to crea
 1. Clone the repository:
 git clone https://github.com/UCB-BioE-Anderson-Lab/C6-Node.git
 
-css
-Copy code
-
 2. Navigate to the project directory:
 cd C6-Node
 
-markdown
-Copy code
-
 3. Install the required dependencies:
 npm install
-
-markdown
-Copy code
 
 ### Running the Plugin
 
 1. Start the Express server:
 npm start
 
-markdown
-Copy code
-
 2. The server will start running on `http://localhost:3000`.
 
 3. To test the "get" function, you can use a tool like `curl` or access the URL in your browser:
 curl "http://localhost:3000/api/get?id=example-id"
-
-markdown
-Copy code
 
 ## Usage with ChatGPT
 
@@ -53,9 +38,6 @@ To use this plugin with ChatGPT, you need to host the manifest file (`.well-know
 Once the plugin is enabled, you can interact with it in ChatGPT by providing instructions that reference the plugin's functionality. For example:
 
 User: Use the C6-Node Plugin to get information for the ID "exampleid3".
-
-markdown
-Copy code
 
 ## License
 
